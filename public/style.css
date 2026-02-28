@@ -1,0 +1,667 @@
+:root {
+    --bg-color: #050510;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    /* Lighter, more translucent */
+    --border-color: rgba(255, 255, 255, 0.15);
+    --primary-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+    /* Electric Blue */
+    --accent-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    /* Pink/Purple */
+    --text-main: #ffffff;
+    --text-secondary: #a0a0b0;
+    --success: #00ff88;
+    --error: #ff3333;
+    --neon-blue: rgba(0, 198, 255, 0.6);
+    --neon-pink: rgba(245, 87, 108, 0.6);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    /* Changed to Outfit as primary */
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+    background: radial-gradient(circle at 50% 10%, #1a1a2e 0%, #050510 100%);
+}
+
+/* Background Abstract Shapes */
+.background-glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.background-glow::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: -100px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--neon-blue) 0%, transparent 60%);
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: floatOrb 15s ease-in-out infinite alternate;
+}
+
+.background-glow::after {
+    content: '';
+    position: absolute;
+    bottom: -200px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--neon-pink) 0%, transparent 60%);
+    filter: blur(80px);
+    opacity: 0.3;
+    animation: floatOrb 20s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes floatOrb {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(50px, 50px);
+    }
+}
+
+.container {
+    width: 100%;
+    max-width: 700px;
+    /* Slightly wider */
+    padding: 2rem;
+    text-align: center;
+    z-index: 10;
+}
+
+header {
+    margin-bottom: 3.5rem;
+    animation: fadeInDown 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.logo {
+    font-size: 4.5rem;
+    font-weight: 800;
+    letter-spacing: -3px;
+    background: linear-gradient(to bottom right, #fff, #b3b3b3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* standard */
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.2rem;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.dot {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+/* Glass Card */
+.glass-panel {
+    background: var(--card-bg);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid var(--border-color);
+    border-radius: 30px;
+    /* More rounded */
+    padding: 3rem;
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.6);
+    animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s backwards;
+    position: relative;
+    overflow: hidden;
+    /* Contains the shine */
+}
+
+/* Inner Shine Line */
+.glass-panel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Inputs */
+input[type="url"],
+.custom-input {
+    width: 100%;
+    padding: 1.4rem 1.8rem;
+    border-radius: 18px;
+    /* Matching pill shape */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Subtle default border */
+    background: rgba(10, 10, 20, 0.6);
+    /* Darker backdrop for inputs */
+    color: white;
+    font-size: 1.05rem;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+input[type="url"]::placeholder,
+.custom-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+input[type="url"]:focus,
+.custom-input:focus {
+    border-color: #3b82f6;
+    /* Electric Blue Focus */
+    background: rgba(10, 10, 20, 0.8);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Button */
+button#shortenBtn {
+    padding: 1.4rem;
+    border-radius: 18px;
+    border: none;
+    background: var(--accent-gradient);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-shadow: 0 10px 30px -5px rgba(245, 87, 108, 0.5);
+    overflow: hidden;
+}
+
+button#shortenBtn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px -5px rgba(245, 87, 108, 0.7);
+}
+
+button#shortenBtn:active {
+    transform: scale(0.98);
+}
+
+/* Button Glow Effect */
+.btn-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 60%);
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.5s, opacity 0.5s;
+}
+
+button#shortenBtn:hover .btn-glow {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Result Section */
+.result-area {
+    margin-top: 2.5rem;
+    padding: 2rem;
+    background: #ffffff;
+    /* Contrast! White card */
+    border-radius: 20px;
+    color: #1a1a2e;
+    /* Dark text for contrast */
+    animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+    text-align: left;
+    /* Reset align */
+}
+
+.success-message {
+    color: #10b981;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+/* Link Box inside Result */
+.link-box {
+    display: flex;
+    align-items: center;
+    background: #f1f5f9;
+    /* Light gray */
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+.short-link-text {
+    flex: 1;
+    color: #334155;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.short-link-text:hover {
+    color: #3b82f6;
+    text-decoration: underline;
+}
+
+/* Copy Button (Dark variant) */
+.copy-btn {
+    background: #e2e8f0;
+    color: #64748b;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.copy-btn:hover {
+    background: #3b82f6;
+    color: white;
+}
+
+/* QR Code Container */
+.qr-code-container {
+    display: flex;
+    justify-content: center;
+    background: transparent;
+    /* Already on white card */
+    margin: 0 auto 1.5rem auto;
+    width: fit-content;
+}
+
+.analytics-preview {
+    text-align: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed #e2e8f0;
+}
+
+.analytics-link {
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.analytics-link:hover {
+    color: #f5576c;
+}
+
+.error-message {
+    background: rgba(255, 51, 51, 0.15);
+    color: #ffcccc;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 51, 51, 0.3);
+    font-size: 0.95rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (min-width: 640px) {
+    .input-group {
+        /* Keep column layout even on desktop */
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    input[type="url"],
+    .custom-input {
+        /* Reset any specific flex values if needed, though default is fine */
+        width: 100%;
+        border-radius: 18px !important;
+        /* Ensure they stay full rounded */
+    }
+
+    button#shortenBtn {
+        width: 100%;
+        /* Keep button full width or maybe auto? User said "expand input boxes" */
+        /* If user wants inputs expanded, likely button too? Let's keep button full width for stacked look or auto if it was effectively "one below each" implying a form stack. */
+        /* Actually, usually "one below each" implies a vertical stack. */
+        padding: 1.4rem;
+    }
+
+
+    /* Inputs and Button already styled for full width in mobile-first approach. 
+       We just need to ensure they stay that way or override specific desktop styles if any were left.
+       The previous replacement handled the stacking.
+       We can just remove the specific desktop overrides that forced them into a row. 
+    */
+
+    /* Connect Inputs visually if desired, or keep separate. Kept separate for cleaner look */
+    /* Connect Inputs visually if desired, or keep separate. Kept separate for cleaner look */
+    input[type="url"],
+    .custom-input {
+        border-radius: 18px;
+    }
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 600px;
+    background: rgba(15, 23, 42, 0.95);
+    /* Dark background for modal */
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-content h2 {
+    color: white;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: white;
+}
+
+.stats-grid {
+    display: flex;
+    /* Changed to flex for centering single item */
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 150px;
+}
+
+.stat-label {
+    display: block;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    display: block;
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+}
+
+.chart-container {
+    width: 100%;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* History Section Styles */
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.history-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.clear-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.clear-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Custom Scrollbar */
+.history-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.history-item {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.history-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.history-original {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.history-short {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.history-link {
+    color: #8b5cf6;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+
+.history-link:hover {
+    color: #d946ef;
+}
+
+/* Share Buttons */
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.share-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.share-btn:hover {
+    transform: translateY(-3px) scale(1.1);
+    color: white;
+}
+
+.share-btn.twitter:hover {
+    background: #1DA1F2;
+    box-shadow: 0 5px 15px -3px rgba(29, 161, 242, 0.4);
+}
+
+.share-btn.whatsapp:hover {
+    background: #25D366;
+    box-shadow: 0 5px 15px -3px rgba(37, 211, 102, 0.4);
+}
+
+.share-btn.linkedin:hover {
+    background: #0A66C2;
+    box-shadow: 0 5px 15px -3px rgba(10, 102, 194, 0.4);
+}
