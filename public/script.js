@@ -1,11 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     const shortenBtn = document.getElementById('shortenBtn');
     const urlInput = document.getElementById('urlInput');
+    const customAlias = document.getElementById('customAlias');
     const resultArea = document.getElementById('result');
     const shortLink = document.getElementById('shortLink');
     const analyticsLink = document.getElementById('analyticsLink');
     const errorDiv = document.getElementById('error');
     const copyBtn = document.getElementById('copyBtn');
+
+    // Clear inputs on every page load/refresh
+    urlInput.value = '';
+    customAlias.value = '';
+    resultArea.classList.add('hidden');
 
     shortenBtn.addEventListener('click', handleShorten);
     urlInput.addEventListener('keypress', (e) => {
@@ -37,8 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     async function handleShorten() {
-        const url = urlInput.value;
-        const customAlias = document.getElementById('customAlias').value;
+        const url = urlInput.value.trim();
+        const alias = customAlias.value.trim();
 
         if (!url) {
             showError("Please enter a valid URL");
@@ -64,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify({
                     url: url,
-                    customAlias: customAlias
+                    customAlias: alias
                 }),
             });
 
